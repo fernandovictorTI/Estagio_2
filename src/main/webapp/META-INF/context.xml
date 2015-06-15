@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true">
+    <Resource name="jdbc/sadsmalllanchonete" auth="Container"
+        type="javax.sql.DataSource"
+        maxActive="100" maxIdle="40" maxWait="1000"
+        username="postgres"
+        password="123123" driverClassName="org.postgresql.Driver"
+        url="jdbc:postgresql://localhost:5432/db_lanchonete?autoReconnect=true" />
+</Context>

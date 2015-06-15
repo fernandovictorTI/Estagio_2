@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/public/template_initial.xhtml">
+	<ui:define name="nav_bar">
+		<ui:include src="../../top_bar.xhtml" />
+	</ui:define>
+
+	<ui:define name="container">
+		<div class="row">
+
+			<div class="col-md-8">
+				<h1>Cadastrar Funcionario!</h1>
+				<br />
+				<h:form>
+
+					<div class="form-group">
+						<h:outputLabel for="inputNome" value="Nome"
+							styleClass="control-label" />
+
+						<h:inputText value="#{funcionarioBean.funcionario.nome}"
+							class="form-control" id="inputNome" required="true"
+							validatorMessage="primeiro nome deve conter entre 2 e 30 caracteres."
+							requiredMessage="é necessário que você informe seu nome.">
+							<f:validateLength minimum="2" maximum="30" />
+							<f:ajax event="blur" render="m_inputNome" />
+						</h:inputText>
+						<h:message id="m_inputNome" for="inputNome" style="color:#D74937;" />
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel for="inputCpf" value="CPF"
+							styleClass="control-label" />
+
+						<h:inputText value="#{funcionarioBean.funcionario.cpf}"
+							class="form-control" id="inputCpf" required="true"
+							validatorMessage="CPF deve conter 14 caracteres."
+							requiredMessage="é necessário que você informe seu CPF.">
+							<f:validateLength minimum="14" maximum="14" />
+							<f:ajax event="blur" render="m_inputCpf" />
+						</h:inputText>
+						<h:message id="m_inputCpf" for="inputCpf" style="color:#D74937;" />
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel for="inputRg" value="RG" styleClass="control-label" />
+
+						<h:inputText value="#{funcionarioBean.funcionario.rg}"
+							class="form-control" id="inputRg"
+							validatorMessage="RG deve conter 20 caracteres.">
+							<f:validateLength minimum="0" maximum="20" />
+							<f:ajax event="blur" render="m_inputRg" />
+						</h:inputText>
+						<h:message id="m_inputRg" for="inputRg" style="color:#D74937;" />
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel for="inputDataNascimento" value="RG"
+							styleClass="control-label" />
+
+						<p:calendar id="inputDataNascimento"
+							value="#{funcionarioBean.funcionario.dataNascimento}"
+							pattern="dd-MM-yyyy" mask="true" />
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel value="Sexo" for="selectSexo"
+							styleClass="control-label" />
+
+						<h:selectOneMenu id="selectSexo" styleClass="form-control"
+							value="#{funcionarioBean.funcionario.sexo}" required="true"
+							requiredMessage="é necessário que você informe seu sexo.">
+							<f:selectItem itemValue="#{null}" itemLabel="Selecione" />
+							<f:selectItem itemValue="M" itemLabel="masculino" />
+							<f:selectItem itemValue="F" itemLabel="feminino" />
+							<f:selectItem itemValue="O" itemLabel="outro" />
+							<f:ajax event="blur" render="m_sexy" />
+						</h:selectOneMenu>
+						<h:message id="m_sexy" for="selectSexo" style="color:#D74937;" />
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel value="Estado Civil" for="selectEstadoCivil"
+							styleClass="control-label" />
+
+						<h:selectOneMenu id="selectEstadoCivil" styleClass="form-control"
+							value="#{funcionarioBean.funcionario.estadoCivil}"
+							required="true"
+							requiredMessage="é necessário que você informe seu sexo.">
+							<f:selectItem itemValue="0" itemLabel="Selecione" />
+							<f:selectItem itemValue="1" itemLabel="Solteiro(a)" />
+							<f:selectItem itemValue="3" itemLabel="Casado(a)" />
+							<f:selectItem itemValue="3" itemLabel="Divorciado(a)" />
+							<f:selectItem itemValue="4" itemLabel="Viúvo(a)" />
+							<f:ajax event="blur" render="m_estadoCivil" />
+						</h:selectOneMenu>
+						<h:message id="m_estadoCivil" for="selectEstadoCivil"
+							style="color:#D74937;" />
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel for="inputEmail" value="E-mail"
+							styleClass="control-label" />
+
+						<h:inputText value="#{funcionarioBean.funcionario.email}"
+							class="form-control" id="inputEmail" required="true"
+							validatorMessage="Seu e-mail deve conter entre 2 e 80 caracteres."
+							requiredMessage="é necessário que você informe seu nome.">
+							<f:validateLength minimum="2" maximum="80" />
+							<f:ajax event="blur" render="m_inputEmail" />
+						</h:inputText>
+						<h:message id="m_inputEmail" for="inputEmail"
+							style="color:#D74937;" />
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel for="inputSenha" value="Senha"
+							styleClass="control-label" />
+
+						<h:inputSecret value="#{funcionarioBean.funcionario.senha}"
+							id="inputSenha" styleClass="form-control" required="true"
+							requiredMessage="Entre com sua Senha."
+							validatorMessage="A senha deve conter entre 6 e 20 caracteres.">
+							<f:validateLength minimum="6" maximum="20" />
+							<f:ajax event="blur" render="m_inputSenha" />
+						</h:inputSecret>
+						<h:message id="m_inputSenha" for="inputSenha"
+							style="color:#D74937;" />
+					</div>
+
+					<div class="form-group">
+						<h:commandButton action="#{funcionarioBean.add()}" value="Salvar"
+							styleClass="btn btn-success btn-sm" />
+						<h:commandButton action="#{funcionarioBean.add()}" value="Voltar"
+							styleClass="btn btn-danger btn-sm" />
+					</div>
+
+				</h:form>
+			</div>
+
+		</div>
+	</ui:define>
+
+	<ui:define name="title">        
+            Cadastrar Funcionario        
+    </ui:define>
+
+</ui:composition>
+</html>
