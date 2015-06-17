@@ -1,0 +1,122 @@
+<main>
+	<div ng-controller="FuncionarioController as Funcionario" >
+
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-xs-12">
+				<div class="panel panel-default">
+
+					<div class="panel-heading">
+						{{Titulo}}{{Titulo2}}
+					</div>
+					<div class="panel-body">
+
+						<div class="form-group">
+							<label>Nome *</label>
+							<input type="text" class="form-control" placeholder="Entre com seu Nome" ng-disabled="IsDisabled" ng-model="Funcionario.nome">
+						</div>
+
+						<div class="form-group">
+							<label>CPF *</label>
+							<input type="text" class="form-control" placeholder="Entre com seu CPF" ng-disabled="IsDisabled" ng-model="Funcionario.cpf">
+						</div>
+
+						<div class="form-group">
+							<label>RG</label>
+							<input type="text" class="form-control" placeholder="Entre com seu RG" ng-disabled="IsDisabled" ng-model="Funcionario.rg">
+						</div>
+
+						<div class="form-group">
+							<label>Data de Nascimento</label>
+							<input type="text" placeholder="Entre com sua Data de Nascimento" ng-disabled="IsDisabled" ng-model="Funcionario.dataNascimento">
+						</div>
+
+						<div class="form-group">
+							<label>Sexo</label>
+							<input type="radio" name="sexo" value="M" ng-model="Funcionario.sexo" ng-disabled="IsDisabled"><label for="pokemonRed">Masculino</label>
+							<input type="radio" name="sexo" value="F" ng-model="Funcionario.sexo" ng-disabled="IsDisabled"><label for="pokemonBlue">Feminino</label>
+						</div>
+
+						<div class="form-group">
+							<label>Estado Civil</label>
+							<select class="form-control" ng-model="Funcionario.estadoCivil" ng-disabled="IsDisabled">
+								<option value="n">***Selecione***</option>
+								<option value="s">Solteiro(a)</option>
+								<option value="c">Casado(a)</option>
+								<option value="d">Divorciado(a)</option>
+								<option value="v">Viúvo(a)</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label>E-mail *</label>
+							<input type="text" class="form-control" placeholder="Entre com seu E-mail" ng-disabled="IsDisabled" ng-model="Funcionario.email">
+						</div>
+
+						<div class="form-group">
+							<label>Senha *</label>
+							<input type="password" class="form-control" placeholder="Entre com sua Senha" ng-disabled="IsDisabled" ng-model="Funcionario.senha">
+						</div>
+
+						<hr />
+						<h4 class="sub-title">Telefone</h4>						
+						<input type="button" class="btn btn-sm btn-primary" value="Adicionar" class="button tiny" onclick="showModalTelefone();" />
+						<br /><br />
+						<table class="table table-bordered table-striped">						
+							<thead>
+								<tr>
+									<th>Número do Telefone</th>
+									<th style="width: 5%">Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="telefone in Funcionario.telefones">
+									<td>{{telefone}}</td>
+									<td style="width: 5%"> <button class="btn btn-xs btn-default" ng-click="removerTelefone(telefone)"><i class="glyphicon glyphicon-trash"></i></button></td>
+								</tr>
+							</tbody>
+						</table>
+						<hr />
+
+						<input type="button" class="btn btn-sm btn-success" value="Cadastrar" ng-click="cadastrar()" />
+						<a href="#/Principal" class="btn btn-sm btn-danger" >Voltar</a>
+
+						<!-- Modals -->
+						<div id="modalTelefone" class="modal fade">
+							<div class="modal-dialog">
+								<div class="modal-content">	
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title">Cadastrar Telefone</h4>
+									</div>
+									<div class="modal-body">
+										<div class="form-group">
+											<label>Número *</label>
+											<input type="text" class="form-control" placeholder="Entre com Número do telefone" ng-disabled="IsDisabled" ng-model="telefone">
+										</div>										
+									</div>
+									<div class="modal-footer">
+										<input type="button" class="btn btn-sm btn-success" value="Cadastrar" ng-click="adicionarTelefone()" onclick="hideModalTelefone();" />
+										<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</main>		
+		
+
+		<script>
+
+			function showModalTelefone(){
+				$('#modalTelefone').modal('show');		
+			}
+
+			function hideModalTelefone(){
+				$('#modalTelefone').modal('hide');
+			}
+
+		</script>

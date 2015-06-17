@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/public/template_initial.xhtml">
 
-<ui:composition template="/public/template_initial.xhtml">
 	<ui:define name="nav_bar">
 		<ui:include src="../../top_bar.xhtml" />
 	</ui:define>
@@ -13,11 +12,11 @@
 	<ui:define name="container">
 		<div class="row">
 
-			<div class="col-md-8">
-				<h1>Cadastrar Funcionario!</h1>
-				<br />
-				<h:form>
+			<h:form class="form-horizontal">
 
+				<div class="col-md-8">
+					<h1>Cadastrar Funcionario!</h1>
+					<br />
 					<div class="form-group">
 						<h:outputLabel for="inputNome" value="Nome"
 							styleClass="control-label" />
@@ -59,12 +58,12 @@
 					</div>
 
 					<div class="form-group">
-						<h:outputLabel for="inputDataNascimento" value="RG"
-							styleClass="control-label" />
+						<h:outputLabel for="inputDataNascimento"
+							value="Data de Nascimento" styleClass="control-label" />
 
 						<p:calendar id="inputDataNascimento"
 							value="#{funcionarioBean.funcionario.dataNascimento}"
-							pattern="dd-MM-yyyy" mask="true" />
+							pattern="dd-MM-yyyy" locale="pt_BR" />
 					</div>
 
 					<div class="form-group">
@@ -132,6 +131,34 @@
 							style="color:#D74937;" />
 					</div>
 
+					<hr />
+					<h4 class="sub-title">Telefone</h4>
+					
+						<h:inputText value="#{funcionarioBean.telefone.telefone}"
+							class="form-control" id="inputNumeroTelefone" required="true"
+							validatorMessage="primeiro nome deve conter entre 2 e 30 caracteres."
+							requiredMessage="é necessário que você informe seu nome.">
+							<f:validateLength minimum="2" maximum="20" />
+							<f:ajax event="blur" render="m_inputNumeroTelefone" />
+						</h:inputText>
+						<h:message id="m_inputNumeroTelefone" for="inputNumeroTelefone"
+							style="color:#D74937;" />
+
+						<h:commandButton actionListener="#{funcionarioBean.addTelefone()}"
+							value="Salvar" styleClass="btn btn-success btn-sm"  />					
+
+					<br /> <br />
+					<p:dataTable
+						value="#{funcionarioBean.funcionario.telefones}" var="item">
+						<f:facet name="header">Lista de Funcionarios</f:facet>
+						<p:column headerText="Código">
+							<h:outputText value="#{item.id}" />
+						</p:column>
+						<p:column headerText="Nome">
+							<h:outputText value="#{item.telefone}" />
+						</p:column>
+					</p:dataTable>
+
 					<div class="form-group">
 						<h:commandButton action="#{funcionarioBean.add()}" value="Salvar"
 							styleClass="btn btn-success btn-sm" />
@@ -139,10 +166,10 @@
 							styleClass="btn btn-danger btn-sm" />
 					</div>
 
-				</h:form>
-			</div>
-
+				</div>
+			</h:form>
 		</div>
+
 	</ui:define>
 
 	<ui:define name="title">        
@@ -150,4 +177,3 @@
     </ui:define>
 
 </ui:composition>
-</html>

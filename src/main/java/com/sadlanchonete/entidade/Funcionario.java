@@ -1,5 +1,6 @@
 package com.sadlanchonete.entidade;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -134,8 +135,16 @@ public class Funcionario {
 	public List<Telefone> getTelefones() {
 		return telefones;
 	}
+	
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
-	}	
+	}
+	
+	public void setTelefone(Telefone telefone) {
+		if(telefones == null){
+			telefones = new ArrayList<Telefone>();
+		}
+		this.telefones.add(telefone);
+	}
 
 }

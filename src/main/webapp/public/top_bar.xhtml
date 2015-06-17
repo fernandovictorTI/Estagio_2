@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <body>
+<p:menuitem value="Funcionario" outcome="/view/funcionario/funcionarioEditView.xhtml"></p:menuitem>
 	<nav class="navbar navbar-inverse navbar-static-top">
 		<div class="container">
 			<div class="navbar-header">
@@ -25,7 +28,8 @@
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Cadastrar</a></li>
+							<li><a href="/sadsmalllanchonete/public/view/funcionario/funcionarioEditView.xhtml">Cadastrar</a></li>
+							<li><p:menuitem value="Funcionario" outcome="/view/funcionario/funcionarioEditView.xhtml"></p:menuitem> </li>
 							<li><a href="#">Listar</a></li>
 						</ul></li>
 				</ul>
