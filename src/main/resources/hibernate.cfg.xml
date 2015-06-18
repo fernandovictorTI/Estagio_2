@@ -14,6 +14,7 @@
 		<mapping class="com.sadlanchonete.entidade.Funcionario" />
 		<mapping class="com.sadlanchonete.entidade.Endereco" />
 		<mapping class="com.sadlanchonete.entidade.Telefone" />
+		<mapping class="com.sadlanchonete.entidade.Produto" />
 		
 	</session-factory>
 </hibernate-configuration>

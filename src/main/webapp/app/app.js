@@ -1,4 +1,4 @@
-angular.module('app', ['ngRoute','mgcrea.ngStrap']).config(config);
+angular.module('app', ['ngRoute','mgcrea.ngStrap','ui.utils.masks']).config(config);
 
 function config($routeProvider){
 	$routeProvider.when('/funcionario/cadastrar/:modo',
@@ -25,11 +25,17 @@ function config($routeProvider){
 			controller : 'PrincipalController',
 			controllerAs: 'Principal'
 		}
-	).when('/',
+	).when('/produto/cadastrar/:modo',
 		{
-			templateUrl : 'app/views/Principal/principal.html',
-			controller : 'PrincipalController',
-			controllerAs: 'Principal'
+			templateUrl : 'app/views/Produto/form.html',
+			controller : 'ProdutoController',
+			controllerAs: 'Produto'
 		}
-	)
+	).when('/',
+			{
+		templateUrl : 'app/views/Principal/principal.html',
+		controller : 'PrincipalController',
+		controllerAs: 'Principal'
+	}
+)
 }

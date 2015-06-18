@@ -3,10 +3,9 @@ package com.sadlanchonete.servlet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
+import javax.faces.convert.FloatConverter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,27 +16,38 @@ import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.sadlanchonete.daos.FuncionarioDao;
-import com.sadlanchonete.entidade.Endereco;
+import com.sadlanchonete.daos.ProdutoDao;
 import com.sadlanchonete.entidade.Funcionario;
+import com.sadlanchonete.entidade.Produto;
 import com.sadlanchonete.entidade.Telefone;
 import com.sadlanchonete.helpers.ConversoesHelper;
 
-@WebServlet("/ServletFuncionario")
-public class ServletFuncionario extends HttpServlet {
+/**
+ * Servlet implementation class ServletProduto
+ */
+@WebServlet("/ServletProduto")
+public class ServletProduto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public ServletFuncionario() {
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ServletProduto() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -46,21 +56,25 @@ public class ServletFuncionario extends HttpServlet {
             json = br.readLine();
         }
         
-        Funcionario funcionario = new Funcionario();
+        Produto produto = new Produto();
         
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        funcionario = gson.fromJson(json, Funcionario.class);
+        try {			
+			JSONObject produtoJson = new JSONObject(json);  
+			produto.setId(produtoJson.getInt("id"));
+			produto.setNomeProduto(produtoJson.getString("nomeProduto"));
+			
+			String precoProduto = produtoJson.getString("preco");
+			
+			produto.setPreco(Float.parseFloat(precoProduto));
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         
-        for(Telefone telefone : funcionario.getTelefones()){
-            telefone.setFuncionario(funcionario);
-        }
-        
-        for(Endereco endereco : funcionario.getEnderecos()){
-        	endereco.setFuncionario(funcionario);
-        }
-        
-        FuncionarioDao funcionarioDao = new FuncionarioDao();
-        funcionarioDao.add(funcionario);
+        ProdutoDao produtoDao = new ProdutoDao();
+        produtoDao.add(produto);
 	}
 
 }

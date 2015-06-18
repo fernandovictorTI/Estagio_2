@@ -14,6 +14,7 @@
 		$scope.cadastrar = cadastrar;
 		$scope.adicionarTelefone = adicionarTelefone;
 		$scope.removerTelefone = removerTelefone;
+		$scope.adicionarEndereco = adicionarEndereco; 
 		$scope.limparCampos = limparCampos;
 		$scope.configurarTela = configurarTela;
 		$scope.bloquearCampos = bloquearCampos;
@@ -35,6 +36,7 @@
 		$scope.Funcionario.email = "";
 		$scope.Funcionario.senha = "";
 		$scope.Funcionario.telefones = [];
+		$scope.Funcionario.enderecos = [];
 
 		if($routeParams.id !== undefined && $routeParams.id !== null)
 			$scope.Funcionario.Id = $routeParams.id;
@@ -87,17 +89,22 @@
 				break;
 			}
 			
-			$scope.Funcionario.estadoCivil = "selecione";
 		}
 
 		function adicionarTelefone(){
 			$scope.Funcionario.telefones.push($scope.telefone);			
-			$scope.telefone = "";			
+			$scope.telefone = [];			
 		}
 
 		function removerTelefone(telefone){
 			var telefoneRemover = $scope.Funcionario.telefones.indexOf(telefone);
 			$scope.Funcionario.telefones.splice(telefoneRemover);
+		}
+		
+		function adicionarEndereco(){
+			console.log('Karol te amo');
+			$scope.Funcionario.enderecos.push($scope.endereco);
+			$scope.endereco = [];
 		}
 
 	}
