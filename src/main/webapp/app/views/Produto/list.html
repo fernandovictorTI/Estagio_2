@@ -1,0 +1,38 @@
+<div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>{{Titulo1}}{{Titulo2}}</h4>
+		</div>
+		<div class="panel-body">
+			<table ng-table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Nome</th>
+						<th>Preço</th>
+						<th>Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="produto in produtos">
+						<td>{{produto.id}}</td>
+						<td>{{produto.nomeProduto}}</td>
+						<td>{{produto.preco}}</td>
+						<td><button type="button" class="btn btn-primary"
+								ng-click="adicionarComponente(produto.id)">
+								<i class="glyphicon glyphicon-plus"></i> Adicionar Componentes
+							</button>
+							<button type="button" class="btn btn-default"
+								ng-click="editar(produto.id)">
+								<i class="glyphicon glyphicon-pencil"></i> Editar
+							</button>
+							<button type="button" class="btn btn-danger"
+								ng-click="excluir(produto.id)">
+								<i class="glyphicon glyphicon-remove"></i> Excluir
+							</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

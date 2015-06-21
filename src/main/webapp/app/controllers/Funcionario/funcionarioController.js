@@ -92,7 +92,7 @@
 		}
 
 		function adicionarTelefone(){
-			$scope.Funcionario.telefones.push($scope.telefone);			
+			$scope.Funcionario.telefones.push($scope.telefone);
 			$scope.telefone = [];			
 		}
 
@@ -102,7 +102,6 @@
 		}
 		
 		function adicionarEndereco(){
-			console.log('Karol te amo');
 			$scope.Funcionario.enderecos.push($scope.endereco);
 			$scope.endereco = [];
 		}

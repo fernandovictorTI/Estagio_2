@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.sadlanchonete.daos.FuncionarioDao;
+
 @Entity
 @SequenceGenerator(name = "seq", sequenceName = "seq_funcionario",
                    allocationSize = 1, initialValue = 1)
@@ -146,5 +148,16 @@ public class Funcionario {
 		}
 		this.telefones.add(telefone);
 	}
+	
+	public boolean temEmailCadastrado(Funcionario funcionario){
+		boolean retorno = false;
+		
+		FuncionarioDao dao = new FuncionarioDao();
+		List<Funcionario> funcionarios = dao.getAll();
+		
+		
+		
+		return retorno;
+	}	
 
 }

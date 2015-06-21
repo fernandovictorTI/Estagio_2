@@ -15,6 +15,10 @@
 		<mapping class="com.sadlanchonete.entidade.Endereco" />
 		<mapping class="com.sadlanchonete.entidade.Telefone" />
 		<mapping class="com.sadlanchonete.entidade.Produto" />
+		<mapping class="com.sadlanchonete.entidade.Componente" />
+		<mapping class="com.sadlanchonete.entidade.ProdutoComponente" />
+		<mapping class="com.sadlanchonete.entidade.Pedido" />
+		<mapping class="com.sadlanchonete.entidade.Item" />
 		
 	</session-factory>
 </hibernate-configuration>
