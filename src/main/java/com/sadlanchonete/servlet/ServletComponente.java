@@ -25,7 +25,30 @@ public class ServletComponente extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		try {
+
+			ComponenteDao componenteDao = new ComponenteDao();
+			String json = "";
+
+			if (request.getParameterMap().containsKey("id")) {
+
+				int id = Integer.parseInt(request.getParameter("id"));
+				Componente componente = componenteDao.getById(id);
+
+				if (request.getParameterMap().containsKey("modo")) {
+					componenteDao.remove(componente);
+				} else {
+					json = new Gson().toJson(componente);
+				}
+			} else {
+				json = new Gson().toJson(componenteDao.getAll());
+			}
+
+			response.setContentType("application/json");
+			response.getWriter().write(json);
+		} catch (Exception e) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,7 +65,12 @@ public class ServletComponente extends HttpServlet {
         componente = gson.fromJson(json, Componente.class);        
                
         ComponenteDao componenteDao = new ComponenteDao();
-        componenteDao.add(componente);
+        
+        if (componente.getId() > 0) {
+        	componenteDao.update(componente);
+		} else {
+			componenteDao  .add(componente);
+		}
 		
 	}
 

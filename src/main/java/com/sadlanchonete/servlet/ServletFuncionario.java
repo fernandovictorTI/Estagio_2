@@ -21,38 +21,69 @@ import com.sadlanchonete.entidade.Telefone;
 public class ServletFuncionario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public ServletFuncionario() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	public ServletFuncionario() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		try {
+
+			FuncionarioDao funcionarioDao = new FuncionarioDao();
+			String json = "";
+
+			if (request.getParameterMap().containsKey("id")) {
+
+				int id = Integer.parseInt(request.getParameter("id"));
+				Funcionario funcionario = funcionarioDao.getById(id);
+
+				if (request.getParameterMap().containsKey("modo")) {
+					funcionarioDao.remove(funcionario);
+				} else {
+					json = new Gson().toJson(funcionario);
+				}
+			} else {
+				json = new Gson().toJson(funcionarioDao.getAll());
+			}
+
+			response.setContentType("application/json");
+			response.getWriter().write(json);
+		} catch (Exception e) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		}
+	}
+
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				request.getInputStream()));
 		String json = "";
-        if(br != null){
-            json = br.readLine();
-        }
-        
-        Funcionario funcionario = new Funcionario();
-        
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        funcionario = gson.fromJson(json, Funcionario.class);
-        
-        for(Telefone telefone : funcionario.getTelefones()){
-            telefone.setFuncionario(funcionario);
-        }
-        
-        for(Endereco endereco : funcionario.getEnderecos()){
-        	endereco.setFuncionario(funcionario);
-        }
-        
-        FuncionarioDao funcionarioDao = new FuncionarioDao();
-        funcionarioDao.add(funcionario);
+		if (br != null) {
+			json = br.readLine();
+		}
+
+		Funcionario funcionario = new Funcionario();
+
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		funcionario = gson.fromJson(json, Funcionario.class);
+
+		for (Telefone telefone : funcionario.getTelefones()) {
+			telefone.setFuncionario(funcionario);
+		}
+
+		for (Endereco endereco : funcionario.getEnderecos()) {
+			endereco.setFuncionario(funcionario);
+		}
+
+		FuncionarioDao funcionarioDao = new FuncionarioDao();
+		
+		if (funcionario.getId() > 0) {
+			funcionarioDao.update(funcionario);
+		} else {
+			funcionarioDao.add(funcionario);
+		}
 	}
 
 }

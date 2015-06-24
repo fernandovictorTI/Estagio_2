@@ -2,7 +2,7 @@
 
 	angular.module('app').controller('ComponenteController',ComponenteController);
 
-	function ComponenteController($scope, $routeParams){
+	function ComponenteController($scope, $routeParams, $http, $location, AlertService, $alert){
 		
 		// Propriedades da pagina
 
@@ -29,30 +29,36 @@
 		$scope.Componente.undMedida = "";
 
 		if($routeParams.id !== undefined && $routeParams.id !== null)
-			$scope.Produto.Id = $routeParams.id;
+			$scope.Componente.id = $routeParams.id;
+		
+		if($scope.Componente.id > 0){
+			
+			var request = $http.get('ServletComponente?id='+$scope.Componente.id).success(function(retorno) {
+				$scope.Componente = retorno;
+			}).error(function(msg) {
+				$scope.mensagem = "Houve um problema ao acessar o serviço. Tente mais tarde";
+			});
+
+        }
 
 		configurarTela($scope.Modo);
 
 		function cadastrar(){
 			
-			$.ajax({
-		        url: "ServletComponente",
-		        type: 'POST',
-		        dataType: 'json',
-		        data: JSON.stringify($scope.Componente),
-		        contentType: 'application/json',
-		        mimeType: 'application/json',
-		 
-		        success: function () {
-		        	alert("Success: ");
-		        },
-		        error:function() {
-		            alert("error: ");
-		        }
-		    });
+			$http.post('ServletComponente', JSON.stringify($scope.Componente)).
+			  success(function(data, status, headers, config) {
+				  $scope.alert = $alert(AlertService.montarAlert($scope.Titulo2, $scope.Modo == "1" ? "Cadastrado com sucesso" : "Editado com sucesso", 'success'));
+				  $scope.alert.show();
+			  }).
+			  error(function(data, status, headers, config) {
+				  $scope.alert = $alert(AlertService.montarAlert($scope.Titulo2,'Houve um problema ao acessar o serviço. Tente mais tarde', 'danger'));
+				  $scope.alert.show();
+			  });
 			
-			$scope.limparCampos();
-			$scope.configurarTela(1);
+			if ($scope.Modo == "1") {
+				$scope.limparCampos();
+				$location.path("/componente/listar");					
+			}
 		}
 
 		function limparCampos(){

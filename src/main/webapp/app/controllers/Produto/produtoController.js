@@ -2,8 +2,8 @@
 
 	angular.module('app').controller('ProdutoController', ProdutoController);
 
-	function ProdutoController($scope, $routeParams, $http) {
-
+	function ProdutoController($scope, $routeParams, $http, $alert, $location, AlertService) {
+		
 		// Propriedades da pagina
 
 		$scope.Titulo = "Cadastrar ";
@@ -27,17 +27,17 @@
 		$scope.Produto.id = 0;
 		$scope.Produto.nomeProduto = "";
 		$scope.Produto.preco = "";
+		$scope.Produto.componentes = [];
 
 		if ($routeParams.id !== undefined && $routeParams.id !== null)
 			$scope.Produto.id = $routeParams.id;
 		
 		if($scope.Produto.id > 0){
-			console.log('Entrou aqui');
+			
 			var request = $http.get('ServletProduto?id='+$scope.Produto.id).success(function(retorno) {
 				$scope.Produto = retorno;
 			}).error(function(msg) {
 				$scope.mensagem = "Houve um problema ao acessar o serviço. Tente mais tarde";
-				console.log(msg);
 			});
 
         }
@@ -46,26 +46,20 @@
 
 		function cadastrar() {
 			
-			$http.post()
-
-			$.ajax({
-				url : "ServletProduto",
-				type : 'POST',
-				dataType : 'json',
-				data : JSON.stringify($scope.Produto),
-				contentType : 'application/json',
-				mimeType : 'application/json',
-
-				success : function() {
-					alert("Success: ");
-				},
-				error : function() {
-					alert("error: ");
-				}
-			});
-
-			$scope.limparCampos();
-			$scope.configurarTela(1);
+			$http.post('ServletProduto', JSON.stringify($scope.Produto)).
+			  success(function(data, status, headers, config) {
+				  $scope.alert = $alert(AlertService.montarAlert($scope.Titulo, 'editado com sucesso', 'success'));
+				  $scope.alert.show();
+			  }).
+			  error(function(data, status, headers, config) {
+				  $scope.alert = $alert(AlertService.montarAlert('Titulo', 'Houve um problema ao acessar o serviço. Tente mais tarde', 'danger'));
+				  $scope.alert.show();
+			  });
+			
+			if ($scope.Modo == "1") {
+				$scope.limparCampos();
+				$location.path("/produto/listar");					
+			}
 		}
 
 		function limparCampos() {
@@ -92,7 +86,7 @@
 				break;
 			}
 
-		}
+		}	
 
 	}
 

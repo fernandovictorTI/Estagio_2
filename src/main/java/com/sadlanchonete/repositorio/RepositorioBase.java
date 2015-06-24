@@ -1,7 +1,9 @@
 package com.sadlanchonete.repositorio;
 
 import java.util.List;
+
 import org.hibernate.Session;
+
 import com.sadlanchonete.dao.utils.HibernateUtil;
 
 public abstract class RepositorioBase<T> implements IRepositorioBase<T> {
@@ -10,13 +12,21 @@ public abstract class RepositorioBase<T> implements IRepositorioBase<T> {
 
 	public RepositorioBase(Class<T> pclass) {
 		this.persistentClass = pclass;
+		getSession();
+	}
+
+	private Session session;
+
+	public Session getSession() {
+		if (session == null) {
+			session = HibernateUtil.getSessionFactory().openSession();
+		}
+
+		return session;
 	}
 
 	@Override
 	public void add(T obj) {
-
-		Session session = HibernateUtil.getSessionFactory().openSession();
-
 		try {
 			session.beginTransaction();
 			session.save(obj);
@@ -30,9 +40,6 @@ public abstract class RepositorioBase<T> implements IRepositorioBase<T> {
 
 	@Override
 	public void remove(T obj) {
-
-		Session session = HibernateUtil.getSessionFactory().openSession();
-
 		try {
 			session.beginTransaction();
 			session.delete(obj);
@@ -47,8 +54,6 @@ public abstract class RepositorioBase<T> implements IRepositorioBase<T> {
 
 	@Override
 	public void update(T obj) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-
 		try {
 			session.beginTransaction();
 			session.update(obj);
@@ -62,19 +67,14 @@ public abstract class RepositorioBase<T> implements IRepositorioBase<T> {
 
 	@Override
 	public T getById(int id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-
-		try {
-			return (T) session.get(persistentClass, id);
-		} finally {
-			session.close();
-		}
-
+		@SuppressWarnings("unchecked")
+		T t = (T) session.get(persistentClass, id);
+		return t;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> getAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
 		return session.createCriteria(persistentClass).list();
 	}
 

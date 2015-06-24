@@ -1,5 +1,6 @@
 package com.sadlanchonete.entidade;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,11 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 @Entity
 @SequenceGenerator(name = "seq", sequenceName = "seq_produto",
                    allocationSize = 1, initialValue = 1)
-public class Produto {
+public class Produto implements Serializable {
 
 	@Id
 	@GeneratedValue(generator="seq")
@@ -26,8 +28,11 @@ public class Produto {
 	@Column()
 	private float preco;
 	
-	@OneToMany(mappedBy = "produto", targetEntity = ProdutoComponente.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<ProdutoComponente> produtosComponentes;
+	@OneToMany(mappedBy = "produto", targetEntity = ProdutoComponente.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<ProdutoComponente> produtoComponentes;
+	
+	@Transient
+	private List<Componente> componentes;
 
 	public int getId() {
 		return id;
@@ -53,12 +58,20 @@ public class Produto {
 		this.preco = preco;
 	}
 
-	public List<ProdutoComponente> getProdutosComponentes() {
-		return produtosComponentes;
+	public List<ProdutoComponente> getProdutoComponentes() {
+		return produtoComponentes;
 	}
 
-	public void setProdutosComponentes(List<ProdutoComponente> produtosComponentes) {
-		this.produtosComponentes = produtosComponentes;
+	public void setProdutoComponentes(List<ProdutoComponente> produtoComponentes) {
+		this.produtoComponentes = produtoComponentes;
+	}
+
+	public List<Componente> getComponentes() {
+		return componentes;
+	}
+
+	public void setComponentes(List<Componente> componentes) {
+		this.componentes = componentes;
 	}
 
 }

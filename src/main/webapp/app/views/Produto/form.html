@@ -1,13 +1,15 @@
 <main>
 <div ng-controller="ProdutoController as Produto">
 
+<div id="alerts-container"></div>
+
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-xs-12">
 			<div class="panel panel-default">
 
 				<div class="panel-heading">{{Titulo}}{{Titulo2}}</div>
 				<div class="panel-body">
-
+				
 					<div class="form-group">
 						<label>Nome *</label> <input type="text" class="form-control"
 							placeholder="Entre com o nome do produto" ng-disabled="IsDisabled"
@@ -17,11 +19,11 @@
 					<div class="form-group">
 						<label>Preço *</label> <input type="text" class="form-control"
 							placeholder="Entre com preço" ng-disabled="IsDisabled"
-							ng-model="Produto.preco">
+							ng-model="Produto.preco" ui-money-mask="2">
 					</div>
 					
 					<input type="button" class="btn btn-sm btn-success"
-						value="Cadastrar" ng-click="cadastrar()" /> <a href="#/Principal"
+						value="{{Titulo}}" ng-click="cadastrar()" /> <a href="#/Principal"
 						class="btn btn-sm btn-danger">Voltar</a>
 					
 				</div>

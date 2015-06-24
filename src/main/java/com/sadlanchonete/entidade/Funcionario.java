@@ -18,7 +18,7 @@ import com.sadlanchonete.daos.FuncionarioDao;
 @Entity
 @SequenceGenerator(name = "seq", sequenceName = "seq_funcionario",
                    allocationSize = 1, initialValue = 1)
-public class Funcionario {
+public class Funcionario  {
 
 	@Id
 	@GeneratedValue(generator="seq")
@@ -150,14 +150,8 @@ public class Funcionario {
 	}
 	
 	public boolean temEmailCadastrado(Funcionario funcionario){
-		boolean retorno = false;
-		
-		FuncionarioDao dao = new FuncionarioDao();
-		List<Funcionario> funcionarios = dao.getAll();
-		
-		
-		
-		return retorno;
+		FuncionarioDao dao = new FuncionarioDao();		
+		return dao.temEmailCadastado(funcionario.getEmail());
 	}	
 
 }

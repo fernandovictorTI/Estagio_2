@@ -1,0 +1,37 @@
+<div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>{{Titulo1}}{{Titulo2}}</h4>
+		</div>
+		<div class="panel-body">
+			<table ng-table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Nome</th>
+						<th>Tipo</th>
+						<th>Unidade Medida</th>
+						<th>Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="componente in componentes">
+						<td>{{componente.id}}</td>
+						<td>{{componente.nomeComponente}}</td>
+						<td>{{componente.tipoComponente}}</td>
+						<td>{{componente.undMedida}}</td>
+						<td>
+							<button type="button" class="btn btn-default"
+								ng-click="editar(componente.id)">
+								<i class="glyphicon glyphicon-pencil"></i> Editar
+							</button>
+							<button type="button" class="btn btn-danger"
+								ng-click="excluir(componente.id)">
+								<i class="glyphicon glyphicon-remove"></i> Excluir
+							</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
