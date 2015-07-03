@@ -64,7 +64,10 @@ public class ServletProduto extends HttpServlet {
 					json = new Gson().toJson(produto);
 				}
 			} else {
-				json = new Gson().toJson(produtoDao.getAll());
+				//List<Produto> produtosClonado = ArrayList<Produto>();
+				
+				Gson gson = new GsonBuilder().disableInnerClassSerialization().create();
+				json = gson.toJson(produtoDao.getAll());
 			}
 
 			response.setContentType("application/json");

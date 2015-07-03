@@ -1,6 +1,5 @@
 package com.sadlanchonete.entidade;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,7 +15,7 @@ import javax.persistence.Transient;
 @Entity
 @SequenceGenerator(name = "seq", sequenceName = "seq_produto",
                    allocationSize = 1, initialValue = 1)
-public class Produto implements Serializable {
+public class Produto {
 
 	@Id
 	@GeneratedValue(generator="seq")
@@ -30,7 +29,7 @@ public class Produto implements Serializable {
 	
 	@OneToMany(mappedBy = "produto", targetEntity = ProdutoComponente.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<ProdutoComponente> produtoComponentes;
-	
+
 	@Transient
 	private List<Componente> componentes;
 

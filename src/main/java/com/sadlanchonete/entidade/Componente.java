@@ -1,7 +1,5 @@
 package com.sadlanchonete.entidade;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +9,7 @@ import javax.persistence.SequenceGenerator;
 @Entity
 @SequenceGenerator(name = "seq", sequenceName = "seq_componente",
                    allocationSize = 1, initialValue = 1)
-public class Componente implements Serializable {
+public class Componente {
 
 	@Id
 	@GeneratedValue(generator="seq")

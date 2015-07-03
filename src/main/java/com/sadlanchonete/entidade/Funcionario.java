@@ -48,10 +48,10 @@ public class Funcionario  {
 	@Column(length = 20)
 	private String senha;
 	
-	@OneToMany(mappedBy = "funcionario", targetEntity = Telefone.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "funcionario", targetEntity = Telefone.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Telefone> telefones;
 	
-	@OneToMany(mappedBy = "funcionario", targetEntity = Endereco.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "funcionario", targetEntity = Endereco.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Endereco> enderecos;
 
 	public int getId() {

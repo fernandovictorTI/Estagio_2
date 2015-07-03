@@ -3,6 +3,8 @@ package com.sadlanchonete.servlet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import com.sadlanchonete.daos.FuncionarioDao;
 import com.sadlanchonete.entidade.Endereco;
 import com.sadlanchonete.entidade.Funcionario;
+import com.sadlanchonete.entidade.FuncionarioView;
 import com.sadlanchonete.entidade.Telefone;
 
 @WebServlet("/ServletFuncionario")
@@ -44,7 +47,19 @@ public class ServletFuncionario extends HttpServlet {
 					json = new Gson().toJson(funcionario);
 				}
 			} else {
-				json = new Gson().toJson(funcionarioDao.getAll());
+				
+				List<FuncionarioView> funcionariosView = new ArrayList<FuncionarioView>();
+				
+				for(Funcionario funcionario : funcionarioDao.getAll()){
+					FuncionarioView funcionarioView = new FuncionarioView();
+					funcionarioView.setId(funcionario.getId());
+					funcionarioView.setEmail(funcionario.getEmail());
+					funcionarioView.setNome(funcionario.getNome());
+					funcionarioView.setCpf(funcionario.getCpf());
+					funcionariosView.add(funcionarioView);
+				}
+				
+				json = new Gson().toJson(funcionariosView);
 			}
 
 			response.setContentType("application/json");
