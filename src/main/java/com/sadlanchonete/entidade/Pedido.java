@@ -22,18 +22,18 @@ public class Pedido {
 	@GeneratedValue(generator = "seq")
 	private int id;
 
-	@Column
+	@Column(nullable = false)
 	private int numeroPedido;
-	
-	@Column
+
+	@Column(nullable = false)
 	private Date dataPedido;
-	
+
 	@Column
 	private String observacao;
-	
+
 	@OneToMany(mappedBy = "pedido", targetEntity = Item.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Item> itens;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_funcionario")
 	private Funcionario funcionario;

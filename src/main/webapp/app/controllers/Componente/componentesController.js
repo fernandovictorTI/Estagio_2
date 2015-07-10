@@ -20,7 +20,6 @@
 			}).error(function(msg) {
 				$scope.mensagem = "Houve um problema ao acessar o serviço. Tente mais tarde";
 				$scope.alert = $alert(AlertService.montarAlert($scope.Titulo, $scope.mensagem, 'danger'));
-				$scope.alert.show();
 			});
 		
 		}
@@ -31,11 +30,9 @@
 			$http.get('ServletComponente?id='+id+'&modo=4').success(function(retorno) {
 				listarComponentes();
 				$scope.alert = $alert(AlertService.montarAlert($scope.Titulo, 'excluido com sucesso', 'success'));
-				$scope.alert.show();
 			}).error(function(msg) {
 				$scope.mensagem = "Houve um problema ao acessar o serviço. Tente mais tarde";
 				$scope.alert = $alert(AlertService.montarAlert($scope.Titulo, $scope.mensagem, 'danger'));
-				$scope.alert.show();
 			});
 		
 		}

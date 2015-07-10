@@ -2,7 +2,7 @@
 
 	angular.module('app').controller('ProdutoComponenteController',ProdutoComponenteController);
 
-	function ProdutoComponenteController(AlertService, $scope, $routeParams, $http, $alert){
+	function ProdutoComponenteController(AlertService, $scope, $routeParams, $http, $alert, $location, $timeout){
 		
 		// Propriedades da pagina
 
@@ -55,19 +55,16 @@
 			$http.post('ServletProduto', JSON.stringify($scope.Produto)).
 			  success(function(data, status, headers, config) {
 				  $scope.alert = $alert(AlertService.montarAlert($scope.Titulo2 ,'cadastrado com sucesso', 'success'));
-				  $scope.alert.show();
 			  }).
 			  error(function(data, status, headers, config) {
 				  $scope.alert = $alert(AlertService.montarAlert($scope.Titulo2, 'Houve um problema ao acessar o serviço. Tente mais tarde', 'danger'));
-				  $scope.alert.show();
 			  });			
 
-			$scope.limparCampos();
-			$scope.configurarTela(1);
+			$timeout($location.path("/produto/listar"), 5000, false);
+			
 		}
 		
 		function adicionarComponente(){
-			console.log($scope.componenteSelect);
 			if($scope.Produto.componentes === undefined){
 				$scope.Produto.componentes = [];
 			}			

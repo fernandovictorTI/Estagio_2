@@ -24,16 +24,16 @@ public class Funcionario  {
 	@GeneratedValue(generator="seq")
 	private int id;
 
-	@Column(length = 14)
+	@Column(length = 14, nullable = false)
 	private String cpf;
 	
-	@Column(length = 80)
+	@Column(length = 80, nullable = false)
 	private String nome;
 	
 	@Column(length = 20)
 	private String rg;
 	
-	@Column(name = "data_nascimento")
+	@Column(name = "data_nascimento", nullable = false)
 	private Date dataNascimento;
 	
 	@Column(length = 1)
@@ -42,17 +42,20 @@ public class Funcionario  {
 	@Column(length = 1, name = "estado_civil")
 	private String estadoCivil;
 	
-	@Column(length = 80)
+	@Column(length = 80, nullable = false)
 	private String email;
 	
-	@Column(length = 20)
+	@Column(length = 20, nullable = false)
 	private String senha;
 	
-	@OneToMany(mappedBy = "funcionario", targetEntity = Telefone.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "funcionario", targetEntity = Telefone.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Telefone> telefones;
 	
-	@OneToMany(mappedBy = "funcionario", targetEntity = Endereco.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "funcionario", targetEntity = Endereco.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Endereco> enderecos;
+	
+	@Column
+	private int status;
 
 	public int getId() {
 		return id;
@@ -152,6 +155,14 @@ public class Funcionario  {
 	public boolean temEmailCadastrado(Funcionario funcionario){
 		FuncionarioDao dao = new FuncionarioDao();		
 		return dao.temEmailCadastado(funcionario.getEmail());
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}	
 
 }

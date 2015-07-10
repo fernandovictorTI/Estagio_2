@@ -48,18 +48,23 @@
 			
 			$http.post('ServletProduto', JSON.stringify($scope.Produto)).
 			  success(function(data, status, headers, config) {
-				  $scope.alert = $alert(AlertService.montarAlert($scope.Titulo, 'editado com sucesso', 'success'));
-				  $scope.alert.show();
+				  			  
+				  if(data != undefined){
+					  if(data == 'ERRO'){
+						  $scope.alert = $alert(AlertService.montarAlert('Campos incorretos', 'Preencha os campos obrigatórios.', 'danger'));
+					  }else{						  
+						  if($scope.Modo == "2"){
+							  $scope.alert = $alert(AlertService.montarAlert($scope.Titulo, 'editado com sucesso', 'success'));
+						  }else{
+							  $location.path("/produto/listar");
+						  }
+					  }
+				  }
+				  
 			  }).
 			  error(function(data, status, headers, config) {
-				  $scope.alert = $alert(AlertService.montarAlert('Titulo', 'Houve um problema ao acessar o serviço. Tente mais tarde', 'danger'));
-				  $scope.alert.show();
+				  $scope.alert = $alert(AlertService.montarAlert('Titulo', 'Houve um problema ao acessar o serviço. Tente mais tarde', 'danger'));				  
 			  });
-			
-			if ($scope.Modo == "1") {
-				$scope.limparCampos();
-				$location.path("/produto/listar");					
-			}
 		}
 
 		function limparCampos() {

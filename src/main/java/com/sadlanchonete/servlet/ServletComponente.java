@@ -52,7 +52,7 @@ public class ServletComponente extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+try{
 		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 		String json = "";
         if(br != null){
@@ -66,12 +66,38 @@ public class ServletComponente extends HttpServlet {
                
         ComponenteDao componenteDao = new ComponenteDao();
         
+        if(!validarCampos(componente)){
+        	throw new Exception();
+        }
+        
         if (componente.getId() > 0) {
         	componenteDao.update(componente);
 		} else {
 			componenteDao  .add(componente);
 		}
+        
+	} catch (Exception e) {
+		response.setContentType("text/html;charset=UTF-8");
+		response.getWriter().write("ERRO");
+	}
 		
 	}
 
+	private boolean validarCampos(Componente componente){
+		String oi = componente.getNomeComponente();
+		if(oi == ""){
+			return false;
+		}
+		
+		if(componente.getTipoComponente() == ""){
+			return false;
+		}
+		
+		if(componente.getUndMedida() == ""){
+			return false;
+		}
+		
+		return true;
+	}
+	
 }

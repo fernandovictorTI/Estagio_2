@@ -21,10 +21,10 @@ public class Produto {
 	@GeneratedValue(generator="seq")
 	private int id;
 	
-	@Column(length = 24)
+	@Column(length = 24, nullable = false)
 	private String nomeProduto;
 	
-	@Column()
+	@Column(nullable = false)
 	private float preco;
 	
 	@OneToMany(mappedBy = "produto", targetEntity = ProdutoComponente.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -21,6 +21,7 @@ import com.sadlanchonete.daos.ProdutoDao;
 import com.sadlanchonete.entidade.Componente;
 import com.sadlanchonete.entidade.Produto;
 import com.sadlanchonete.entidade.ProdutoComponente;
+import com.sadlanchonete.entidade.ProdutoView;
 
 @WebServlet("/ServletProduto")
 public class ServletProduto extends HttpServlet {
@@ -61,13 +62,40 @@ public class ServletProduto extends HttpServlet {
 				if (request.getParameterMap().containsKey("modo")) {
 					produtoDao.remove(produto);
 				} else {
-					json = new Gson().toJson(produto);
+					
+					ProdutoView produtoView = new ProdutoView();
+					produtoView.setId(produto.getId());
+					produtoView.setNomeProduto(produto.getNomeProduto());
+					produtoView.setPreco(produto.getPreco());
+					
+					for(ProdutoComponente produtoComponente : produto.getProdutoComponentes()){
+						Componente componente = new Componente();
+						componente = produtoComponente.getComponente();
+						componente.setId(produtoComponente.getId());
+						produtoView.setComponente(componente);
+					}
+					
+					json = new Gson().toJson(produtoView);
 				}
 			} else {
-				//List<Produto> produtosClonado = ArrayList<Produto>();
 				
-				Gson gson = new GsonBuilder().disableInnerClassSerialization().create();
-				json = gson.toJson(produtoDao.getAll());
+                List<ProdutoView> produtosView = new ArrayList<ProdutoView>();
+                List<Produto> produtos = produtoDao.getAll();                
+                
+				if (produtos != null) {
+					if (produtos.size() > 0) {
+						for (Produto produto : produtoDao.getAll()) {
+							ProdutoView produtoView = new ProdutoView();
+							produtoView.setId(produto.getId());
+							produtoView
+									.setNomeProduto(produto.getNomeProduto());
+							produtoView.setPreco(produto.getPreco());
+							produtosView.add(produtoView);
+						}
+					}
+				}
+				
+				json = new Gson().toJson(produtosView);
 			}
 
 			response.setContentType("application/json");
@@ -103,6 +131,7 @@ public class ServletProduto extends HttpServlet {
 			
 			for (Componente componente : produto.getComponentes()) {
 				produtoComponente = new ProdutoComponente();
+				produtoComponente.setId(componente.getId());
 				produtoComponente.setComponente(componente);
 				produtoComponente.setProduto(produto);
 				lstProdutosComponente.add(produtoComponente);
@@ -116,13 +145,9 @@ public class ServletProduto extends HttpServlet {
 			} else {
 				produtoDao.add(produto);
 			}
-		} catch (Exception e) {
-			try {
-				throw new Exception(e.getMessage());
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		}catch (Exception e) {
+			response.setContentType("text/html;charset=UTF-8");
+			response.getWriter().write("ERRO");
 		}
 	}
 

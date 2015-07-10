@@ -50,6 +50,10 @@ function config($routeProvider) {
 		templateUrl : 'app/views/Componente/list.html',
 		controller : 'ComponentesController',
 		controllerAs : 'Componente'
+	}).when('/pedido/cadastrar/:modo', {
+		templateUrl : 'app/views/Pedido/form.html',
+		controller : 'PedidoController',
+		controllerAs : 'Pedido'
 	}).when('/', {
 		templateUrl : 'app/views/Principal/principal.html',
 		controller : 'PrincipalController',

@@ -1,0 +1,73 @@
+<main>
+<div ng-controller="PedidoController as Pedido">
+
+	<div class="col-lg-12">
+		<h1 class="page-header">{{Titulo2}}</h1>
+	</div>
+
+	<div class="col-lg-12 col-md-12 col-xs-12">
+		<div class="panel panel-default">
+
+			<div class="panel-heading">{{Titulo}}{{Titulo2}}</div>
+			<div class="panel-body">
+
+				<div class="form-group">
+					<label>Número do pedido *</label> <input type="text"
+						class="form-control" ng-disabled="true"
+						ng-model="Pedido.numeroPedido">
+				</div>
+
+				<div class="form-group">
+					<label>Funcionario *</label> <select ng-model="funcionarioSelect"
+						class="form-control">
+						<option ng-repeat="funcionario in funcionarios"
+							value="{{funcionario}}">{{funcionario.nome}}</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label>Observação</label>
+					<textarea rows="4" class="form-control"
+						ng-model="Pedido.observacao"></textarea>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group">
+						<select ng-model="produtoSelect" class="form-control">
+							<option ng-repeat="produtoPedido in produtos"
+								value="{{produtoPedido}}">{{produtoPedido.nomeProduto}}</option>
+						</select> <span class="input-group-btn">
+							<button class="btn btn-default" type="button"
+								ng-click="adicionarProduto()">Adicionar produto!</button>
+						</span>
+					</div>
+				</div>
+
+				<hr />
+				<h4>Itens do Pedido</h4>
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>Produto</th>
+							<th style="width: 5%">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="produto in Pedido.itens">
+							<td>{{produto.nome}}</td>
+							<td style="width: 5%">
+								<button class="btn btn-xs btn-default">
+									<i class="glyphicon glyphicon-trash"></i>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<input type="button" class="btn btn-sm btn-success"
+					value="{{Titulo}}" ng-click="cadastrar()" /> <a href="#/Principal"
+					class="btn btn-sm btn-danger">Voltar</a>
+
+			</div>
+		</div>
+</main>

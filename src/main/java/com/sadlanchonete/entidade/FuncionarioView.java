@@ -7,7 +7,14 @@ public class FuncionarioView {
 	private String cpf;	
 	private String nome;
 	private String email;
+	private int status;
 	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public int getId() {
 		return id;
 	}

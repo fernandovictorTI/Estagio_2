@@ -2,7 +2,7 @@
 
 	angular.module('app').controller('ProdutosController', ProdutosController);
 
-	function ProdutosController($scope, $routeParams, $http, $location, $alert) {
+	function ProdutosController($scope, $routeParams, $http, $location, AlertService, $alert, $templateCache) {
 		
 		$scope.Titulo1 = "Listar ";
 		$scope.Titulo2 = "Produto";
@@ -18,9 +18,7 @@
 			$http.get('ServletProduto').success(function(retorno) {
 				$scope.produtos = retorno;
 			}).error(function(msg) {
-				$scope.mensagem = "Houve um problema ao acessar o serviço. Tente mais tarde";
-				var alert = $alert(montarAlert($scope.mensagem, 'danger'));
-				alert.show();
+				$scope.alert = $alert(AlertService.montarAlert($scope.Titulo2, 'Houve um problema ao acessar o serviço. Tente mais tarde.', 'danger'));
 			});
 		
 		}
@@ -30,14 +28,10 @@
 		function excluir(id){
 			$http.get('ServletProduto?id='+id+'&modo=4').success(function(retorno) {
 				listarProdutos();
-				var alert = $alert(montarAlert('excluido com sucesso', 'success'));
-				alert.show();
+				$scope.alert = $alert(AlertService.montarAlert($scope.Titulo2, 'Excluido com sucesso.', 'success'));
 			}).error(function(msg) {
-				$scope.mensagem = "Houve um problema ao acessar o serviço. Tente mais tarde";
-				var alert = $alert(montarAlert($scope.mensagem, 'danger'));
-				alert.show();
+				$scope.alert = $alert(AlertService.montarAlert($scope.Titulo2, 'Houve um problema ao acessar o serviço. Tente mais tarde.', 'danger'));
 			});
-		
 		}
 		
 		function editar(id){
@@ -46,16 +40,6 @@
 		
 		function adicionarComponente(id){
 			$location.path("/produto/adicionarComponente/"+id);
-		}
-		
-		function montarAlert(contentMsg, typeMsg){
-			return {
-				title : $scope.Titulo2,
-				content : contentMsg,
-				placement: 'top',
-				type : typeMsg, 
-				container : "main"
-			}; 
 		}
 	}
 

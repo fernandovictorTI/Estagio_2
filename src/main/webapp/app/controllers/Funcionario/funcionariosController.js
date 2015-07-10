@@ -11,31 +11,29 @@
 		
 		$scope.editar = editar;
 		$scope.listarFuncionarios = listarFuncionarios;
-		$scope.excluir = excluir;
+		$scope.inativar = inativar;
 		
 		function listarFuncionarios(){
 			
 			$http.get('ServletFuncionario').success(function(retorno) {
 				$scope.funcionarios = retorno;
 			}).error(function(msg) {
+				console.log(msg);
 				$scope.mensagem = "Houve um problema ao acessar o serviço. Tente mais tarde";
 				var alert = $alert(AlertService.montarAlert($scope.mensagem, 'danger'));
-				alert.show();
 			});
 		
 		}
 		
 		listarFuncionarios();
 		
-		function excluir(id){
-			$http.get('ServletFuncionario?id='+id+'&modo=4').success(function(retorno) {
+		function inativar(id){
+			$http.post('ServletFuncionario?id='+id).success(function(retorno) {
 				listarFuncionarios();
-				var alert = $alert(AlertService.montarAlert('excluido com sucesso', 'success'));
-				alert.show();
+				var alert = $alert(AlertService.montarAlert('inativado com sucesso', 'success'));
 			}).error(function(msg) {
 				$scope.mensagem = "Houve um problema ao acessar o serviço. Tente mais tarde";
 				var alert = $alert(AlertService.montarAlert($scope.mensagem, 'danger'));
-				alert.show();
 			});
 		
 		}

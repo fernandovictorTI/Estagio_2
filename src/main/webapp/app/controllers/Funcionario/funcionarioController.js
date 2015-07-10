@@ -2,7 +2,7 @@
 
 	angular.module('app').controller('FuncionarioController',FuncionarioController);
 
-	function FuncionarioController($scope, $routeParams){
+	function FuncionarioController($scope, $routeParams, $http, $alert, $location, AlertService){
 		
 		// Propriedades da pagina
 
@@ -19,6 +19,7 @@
 		$scope.configurarTela = configurarTela;
 		$scope.bloquearCampos = bloquearCampos;
 		$scope.Modo = "";
+		$scope.alert = "";
 
 		if($routeParams.modo !== undefined && $routeParams.modo !== null)
 			$scope.Modo = $routeParams.modo; // 1 = Cadastrar, 2 = Editar e 3 = Vizualizar
@@ -39,30 +40,50 @@
 		$scope.Funcionario.enderecos = [];
 
 		if($routeParams.id !== undefined && $routeParams.id !== null)
-			$scope.Funcionario.Id = $routeParams.id;
+			$scope.Funcionario.id = $routeParams.id;
+		
+		if($scope.Funcionario.id > 0){
+			
+			var request = $http.get('ServletFuncionario?id='+$scope.Funcionario.id).success(function(retorno) {
+				$scope.Funcionario = retorno;
+			}).error(function(msg) {
+				$scope.alert = $alert(AlertService.montarAlert('Titulo', 'Houve um problema ao acessar o serviço. Tente mais tarde', 'danger'));
+			});
+
+        }
+		
+		function montarAlert(titulo ,contentMsg, typeMsg){
+			return {
+				title : titulo,
+				content : contentMsg,
+				placement: 'top',
+				type : typeMsg, 
+				container : "main"
+			}; 
+		}
 
 		configurarTela($scope.Modo);
 
 		function cadastrar(){
 			
-			$.ajax({
-		        url: "ServletFuncionario",
-		        type: 'POST',
-		        dataType: 'json',
-		        data: JSON.stringify($scope.Funcionario),
-		        contentType: 'application/json',
-		        mimeType: 'application/json',
-		 
-		        success: function () {
-		        	alert("Success: ");
-		        },
-		        error:function() {
-		            alert("error: ");
-		        }
-		    });
+			$http.post('ServletFuncionario', JSON.stringify($scope.Funcionario)).
+			  success(function(data, status, headers, config) {
+				  if(data != undefined){
+					  if(data == 'ERRO'){
+						  $scope.alert = $alert(AlertService.montarAlert('Campos incorretos', 'Preencha os campos obrigatórios.', 'danger'));
+					  }else{
+						  $location.path("/funcionario/listar");
+					  }
+				  }
+			  }).
+			  error(function(data, status, headers, config) {
+				  $scope.alert = $alert(AlertService.montarAlert('Titulo', 'Houve um problema ao acessar o serviço. Tente mais tarde', 'danger'));				  
+			  });
 			
-			$scope.limparCampos();
-			$scope.configurarTela(1);
+			if ($scope.Modo != "1") {			
+				$scope.limparCampos();
+				$scope.configurarTela(1);
+			}
 		}
 
 		function limparCampos(){

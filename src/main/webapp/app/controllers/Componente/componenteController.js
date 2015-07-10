@@ -27,6 +27,7 @@
 		$scope.Componente.nomeComponente = "";
 		$scope.Componente.tipoComponente = "";
 		$scope.Componente.undMedida = "";
+		$scope.Componente.quantidade = 0;
 
 		if($routeParams.id !== undefined && $routeParams.id !== null)
 			$scope.Componente.id = $routeParams.id;
@@ -47,18 +48,20 @@
 			
 			$http.post('ServletComponente', JSON.stringify($scope.Componente)).
 			  success(function(data, status, headers, config) {
-				  $scope.alert = $alert(AlertService.montarAlert($scope.Titulo2, $scope.Modo == "1" ? "Cadastrado com sucesso" : "Editado com sucesso", 'success'));
-				  $scope.alert.show();
+				  
+				  if(data == 'ERRO'){
+					  $scope.alert = $alert(AlertService.montarAlert('Campos incorretos', 'Preencha os campos obrigatórios.', 'danger'));
+				  }else{						  
+					  if($scope.Modo == "2"){
+						  $scope.alert = $alert(AlertService.montarAlert($scope.Titulo2, $scope.Modo == "1" ? "Cadastrado com sucesso" : "Editado com sucesso", 'success'));
+					  }else{
+						  $location.path("/componente/listar");
+					  }
+				  }
 			  }).
 			  error(function(data, status, headers, config) {
 				  $scope.alert = $alert(AlertService.montarAlert($scope.Titulo2,'Houve um problema ao acessar o serviço. Tente mais tarde', 'danger'));
-				  $scope.alert.show();
 			  });
-			
-			if ($scope.Modo == "1") {
-				$scope.limparCampos();
-				$location.path("/componente/listar");					
-			}
 		}
 
 		function limparCampos(){
@@ -77,6 +80,7 @@
 
 				case "2":
 				$scope.Titulo = "Editar ";
+				$scope.bloquearCampos();
 				break;
 
 				case "3":

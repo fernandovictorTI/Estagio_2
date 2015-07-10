@@ -1,5 +1,6 @@
 package com.sadlanchonete.entidade;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,12 +18,15 @@ public class ProdutoComponente {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "id_produto", updatable = true, insertable = true, columnDefinition = "id_produto")
+	@JoinColumn(name = "id_produto", updatable = true, insertable = true)
 	private Produto produto;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_componente", updatable = true, insertable = true, columnDefinition = "id_componente")
+	@JoinColumn(name = "id_componente", updatable = true, insertable = true)
 	private Componente componente;
+	
+	@Column
+	private int quantidadeNecessaria;
 
 	public int getId() {
 		return id;
@@ -46,6 +50,14 @@ public class ProdutoComponente {
 
 	public void setComponente(Componente componente) {
 		this.componente = componente;
+	}
+
+	public int getQuantidadeNecessaria() {
+		return quantidadeNecessaria;
+	}
+
+	public void setQuantidadeNecessaria(int quantidadeNecessaria) {
+		this.quantidadeNecessaria = quantidadeNecessaria;
 	}
 
 }

@@ -1,18 +1,238 @@
-<div class="row" ng-controller="PrincipalController">
-  <div class="col-md-12">
-    <h2>Bem vindo ao SAD Lanchonete!!!!</h2>
-    <h3 style="text-indent: 50px;">O sistema gera relatórios de forma personalizada ou gráficos a respeito das suas vendas e lucros, relatório de lista de compras diárias baseadas num percentual de venda e quantidade em estoque, cadastro de produtos, cadastro de componentes e cadastro de funcionarios. </h3>
-    <div class="row">
-      <div class="col-md-4">
-        <img data-interchange="[assets/img/images/responsive-medium.svg, (default)], [assets/img/images/responsive.svg, (large)]" data-uuid="interchange-i7xsqlak0" src="assets/img/grafico.jpg">
-      </div>
-      <div class="col-md-4">
-        <img data-interchange="[assets/img/images/responsive-medium.svg, (default)], [assets/img/images/responsive.svg, (large)]" data-uuid="interchange-i7xsqlak0" src="assets/img/relatorio.png">
-      </div>
-      <div class="col-md-4">
-      <p style="text-indent: 50px; text-align: justify;">Varias lanchonetes não tem o controle de compras e vendas e muitas vezes perdem produtos em estoque por não saberem oque realmente conte no estoque e oque será utilizado no dia por serem empresas com pequenos percentuais de lucro e não terem dinheiro para investir em uma solução completa que resolva os problemas. Este sistema gerara relatórios diários de compras baseados no que contem em estoque e num percentual de vendas do dia para que não compre a mais nem a menos. A não utilização do sistema o administrador vai sempre estar fazendo compras e vendas sem nenhuma base de informação, ficando dessa forma difícil de competir com outras empresas.
-        </p>
-      </div>
-    </div>
-  </div>
-  </div>
+
+<div class="row" ng-controller="PrincipalController as Principal">
+	<div class="col-lg-12">
+		<h1 class="page-header">Vamos come�ar?</h1>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+	<div class="col-lg-3 col-md-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-edit fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">Novo</div>
+						<div>Pedido!</div>
+					</div>
+				</div>
+			</div>
+			<a href="#/pedido/cadastrar/1">
+				<div class="panel-footer">
+					<span class="pull-left">Cadastrar Pedido</span> <span
+						class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-6">
+		<div class="panel panel-green">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-user fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">Novo</div>
+						<div>Funcionario!</div>
+					</div>
+				</div>
+			</div>
+			<a href="#/funcionario/cadastrar/1">
+				<div class="panel-footer">
+					<span class="pull-left">Cadastrar Funcionario</span> <span
+						class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-6">
+		<div class="panel panel-yellow">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-cutlery fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">{{Principal.qtdProduto}}</div>
+						<div>Produto(s)!</div>
+					</div>
+				</div>
+			</div>
+			<a href="#/produto/listar">
+				<div class="panel-footer">
+					<span class="pull-left">Detalhes</span> <span class="pull-right"><i
+						class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-6">
+		<div class="panel panel-red">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-cubes fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">{{Principal.qtdComponente}}</div>
+						<div>Componente(s)</div>
+					</div>
+				</div>
+			</div>
+			<a href="#/componente/listar">
+				<div class="panel-footer">
+					<span class="pull-left">Detalhes</span> <span class="pull-right"><i
+						class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+<!-- /.row -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-list-ul fa-fw"></i> Gerar relat�rio de compras ao
+				estoque
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<button class="btn btn-primary btn-sm">
+					<i class="fa fa-file-pdf-o"></i> Gerar relat�rio
+				</button>
+
+<br /><br />
+
+				<table ng-table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Nome do Componente</th>
+							<th>Tipo do Componente</th>
+							<th>Quantidade a ser comprada</th>
+							<th>Marcadores</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="componente in componetes">
+							<td>{{componente.id}}</td>
+							<td>{{componente.nomeComponete}}</td>
+							<td>{{componente.quantidade}}</td>
+							<td><input type="checkbox" /></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /.row -->
+<div class="row">
+	<div class="col-lg-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-car fa-fw"></i> Precisa de ajuda?
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<ul class="timeline">
+					<li>
+						<div class="timeline-badge">
+							<i class="fa fa-cutlery"></i>
+						</div>
+						<div class="timeline-panel">
+							<div class="timeline-heading">
+								<h4 class="timeline-title">Cadastrar Produto</h4>
+							</div>
+							<div class="timeline-body">
+								<p>Selecione no menu a esquerda [Produto], logo depois
+									[Cadastrar]. Preencha o formulario corretamente depois clique
+									em cadastrar.</p>
+								<p>Prontinho facil n�o.</p>
+							</div>
+						</div>
+					</li>
+					<li class="timeline-inverted">
+						<div class="timeline-badge warning">
+							<i class="fa fa-cubes"></i>
+						</div>
+						<div class="timeline-panel">
+							<div class="timeline-heading">
+								<h4 class="timeline-title">Cadastrar Componentes do produto</h4>
+							</div>
+							<div class="timeline-body">
+								<p>Selecione no menu a esquerda [Componente], logo depois
+									[Cadastrar]. Preencha o formulario corretamente depois clique
+									em cadastrar.</p>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="timeline-badge danger">
+							<i class="fa fa-toggle-off"></i>
+						</div>
+						<div class="timeline-panel">
+							<div class="timeline-heading">
+								<h4 class="timeline-title">Adicionar componentes ao produto</h4>
+							</div>
+							<div class="timeline-body">
+								<p>Selecione no menu a esquerda [Produto], logo depois
+									[Listar]. Clique em adicionar componentes. Preencha o
+									formulario corretamente depois clique em cadastrar.</p>
+								<p>N�o se esque�a dos campos obrigat�rios, os mesmo vem
+									sempre seguidos de '*'.
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
+	</div>
+	<!-- /.col-lg-8 -->
+	<div class="col-lg-4">
+		<div class="chat-panel panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-bug fa-fw"></i> Sujest�es de melhoria para o sistema
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<ul class="chat">
+					<li class="left clearfix">
+						<div class="chat-body clearfix">
+							<div class="header">
+								<strong class="primary-font">Fernando Victor</strong>
+							</div>
+							<p>Implementar pesquisa e pagina��o em todo lugar do sistema onde contenha lista para maior facilidadedo usuario.</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!-- /.panel-body -->
+			<div class="panel-footer">
+				<div class="input-group">
+					<input id="btn-input" type="text" class="form-control input-sm"
+						placeholder="Cadastre uma possivel melhoria" /> <span
+						class="input-group-btn">
+						<button class="btn btn-warning btn-sm" id="btn-chat">
+							Cadastrar</button>
+					</span>
+				</div>
+			</div>
+			<!-- /.panel-footer -->
+		</div>
+		<!-- /.panel .chat-panel -->
+	</div>
+	<!-- /.col-lg-4 -->
+</div>
+<!-- /.row -->

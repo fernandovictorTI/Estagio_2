@@ -15,14 +15,17 @@ public class Componente {
 	@GeneratedValue(generator="seq")
 	private int id;
 	
-	@Column(length = 60)
+	@Column(length = 60, nullable = false)
 	private String nomeComponente;
 	
-	@Column(length = 60)
+	@Column(length = 60, nullable = false)
 	private String tipoComponente;
 	
-	@Column(length = 60)
+	@Column(length = 60, nullable = false)
 	private String undMedida;
+	
+	@Column
+	private int quantidade;
 
 	public int getId() {
 		return id;
@@ -54,6 +57,14 @@ public class Componente {
 
 	public void setUndMedida(String undMedida) {
 		this.undMedida = undMedida;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
 	}
 
 }
