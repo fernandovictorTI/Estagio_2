@@ -15,7 +15,8 @@
 		$scope.limparCampos = limparCampos;
 		$scope.configurarTela = configurarTela;
 		$scope.bloquearCampos = bloquearCampos;
-		$scope.adicionarComponente = adicionarComponente
+		$scope.adicionarComponente = adicionarComponente;
+		$scope.removerComponente = removerComponente;
 		$scope.Modo = "";
 
 		if($routeParams.modo !== undefined && $routeParams.modo !== null)
@@ -28,6 +29,7 @@
 		$scope.Produto.nomeProduto = "";
 		$scope.Produto.preco = "";
 		$scope.Produto.componentes = [];
+		$scope.quantidadeNecessaria = 0;
 		
 		$scope.componentes = [];
 
@@ -60,16 +62,23 @@
 				  $scope.alert = $alert(AlertService.montarAlert($scope.Titulo2, 'Houve um problema ao acessar o serviço. Tente mais tarde', 'danger'));
 			  });			
 
-			$timeout($location.path("/produto/listar"), 5000, false);
+			$location.path("/produto/listar");
 			
 		}
 		
 		function adicionarComponente(){
 			if($scope.Produto.componentes === undefined){
 				$scope.Produto.componentes = [];
-			}			
-			$scope.Produto.componentes.push(JSON.parse($scope.componenteSelect));
-		}	
+			}
+			
+			var componente = JSON.parse($scope.componenteSelect);
+			componente.quantidadeNecessaria = $scope.quantidadeNecessaria;
+			$scope.Produto.componentes.push(componente);
+		}
+		
+		function removerComponente(componente){
+			$scope.Produto.componentes.splice(componente);
+		}		
 
 		function limparCampos(){
 			$scope.Produto = {};

@@ -1,4 +1,4 @@
-
+<main class="row">
 <div class="col-lg-12">
 	<h1 class="page-header">{{Titulo1}}{{Titulo2}}</h1>
 </div>
@@ -6,12 +6,12 @@
 	<table ng-table class="table table-bordered">
 		<thead>
 			<tr>
-				<th>Código</th>
+				<th>CÃ³digo</th>
 				<th>Nome</th>
 				<th>CPF</th>
 				<th>E-mail</th>
 				<th>Status</th>
-				<th>Ações</th>
+				<th>AÃ§Ãµes</th> 
 			</tr>
 		</thead>
 		<tbody>
@@ -22,7 +22,7 @@
 				<td>{{funcionario.email}}</td>
 				<td>{{ funcionario.status && "Ativado" || "Inativado" }}</td>
 				<td>
-					<button type="button" class="btn btn-danger"
+					<button type="button" class="btn btn-danger btn-sm"
 						ng-disabled="!funcionario.status"
 						ng-click="inativar(funcionario.id)">
 						<i class="glyphicon glyphicon-remove"></i> Inativar
@@ -31,4 +31,4 @@
 			</tr>
 		</tbody>
 	</table>
-</div>
+</main> 

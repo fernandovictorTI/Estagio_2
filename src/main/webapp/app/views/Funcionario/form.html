@@ -1,4 +1,4 @@
-<main>
+<main class="row"> 
 <div ng-controller="FuncionarioController as Funcionario">
 
 	<div class="col-lg-12">
@@ -20,7 +20,7 @@
 				<div class="form-group">
 					<label>CPF *</label> <input type="text" class="form-control"
 						placeholder="Entre com seu CPF" ng-disabled="IsDisabled"
-						ng-model="Funcionario.cpf" maxlength="14" ui-br-cpf-mask>
+						ng-model="Funcionario.cpf" maxlength="14" ui-br-cpf-mask required>
 				</div>
 
 				<div class="form-group">
@@ -33,7 +33,7 @@
 					<label>Data de Nascimento *</label> <input type="date"
 						class="form-control"
 						placeholder="Entre com sua Data de Nascimento"
-						ng-disabled="IsDisabled" ng-model="Funcionario.dataNascimento">
+						ng-disabled="IsDisabled" ng-model="Funcionario.dataNascimento" required>
 				</div>
 
 				<div class="form-group">
@@ -59,13 +59,13 @@
 					<label>E-mail *</label> <input type="email" class="form-control"
 						placeholder="Entre com seu E-mail" ng-disabled="IsDisabled"
 						ng-model="Funcionario.email" maxlength="80"
-						pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+						pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
 				</div>
 
 				<div class="form-group">
 					<label>Senha *</label> <input type="password" class="form-control"
 						placeholder="Entre com sua Senha" ng-disabled="IsDisabled"
-						ng-model="Funcionario.senha" maxlength="20">
+						ng-model="Funcionario.senha" maxlength="20" required>
 				</div>
 
 				<hr />
@@ -76,8 +76,8 @@
 				<table class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th>Número do Telefone</th>
-							<th style="width: 5%">Ações</th>
+							<th>NÃºmero do Telefone</th>
+							<th style="width: 5%">AÃ§Ãµes</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -95,7 +95,7 @@
 				<hr />
 
 				<hr />
-				<h4 class="sub-title">Endereço</h4>
+				<h4 class="sub-title">EndereÃ§o</h4>
 				<input type="button" class="btn btn-sm btn-primary"
 					value="Adicionar" class="button tiny"
 					onclick="showModalEndereco();" /> <br /> <br />
@@ -103,7 +103,7 @@
 					<thead>
 						<tr>
 							<th>Estado</th>
-							<th style="width: 5%">Ações</th>
+							<th style="width: 5%">AÃ§Ãµes</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -138,8 +138,9 @@
 								<h4 class="modal-title">Cadastrar Telefone</h4>
 							</div>
 							<div class="modal-body">
+							<strong></strong>
 								<div class="form-group">
-									<label>Número *</label> <input type="text" class="form-control"
+									<label>NÃºmero *</label> <input type="text" class="form-control"
 										placeholder="Entre com NÃºmero do telefone"
 										ng-disabled="IsDisabled" ng-model="telefone.telefone"
 										maxlength="20" ui-br-phone-number>
@@ -147,8 +148,7 @@
 							</div>
 							<div class="modal-footer">
 								<input type="button" class="btn btn-sm btn-success"
-									value="Cadastrar" ng-click="adicionarTelefone()"
-									onclick="hideModalTelefone();" />
+									value="Cadastrar" ng-click="adicionarTelefone()"									 />
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">Fechar</button>
 							</div>
@@ -165,7 +165,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-								<h4 class="modal-title">Cadastrar Endereço</h4>
+								<h4 class="modal-title">Cadastrar EndereÃ§o</h4>
 							</div>
 							<div class="modal-body">
 								<div class="form-group">
@@ -183,25 +183,25 @@
 								</div>
 								<div class="form-group">
 									<label>Bairro</label> <input type="text" class="form-control"
-										placeholder="Entre com NÃºmero do telefone"
+										placeholder="Entre com bairro"
 										ng-disabled="IsDisabled" ng-model="endereco.bairro"
 										maxlength="80">
 								</div>
 								<div class="form-group">
 									<label>Rua</label> <input type="text" class="form-control"
-										placeholder="Entre com NÃºmero do telefone"
+										placeholder="Entre com a rua"
 										ng-disabled="IsDisabled" ng-model="endereco.rua"
 										maxlength="255">
 								</div>
 								<div class="form-group">
-									<label>Número</label> <input type="text" class="form-control"
-										placeholder="Entre com número do endereço"
+									<label>NÃºmero</label> <input type="text" class="form-control"
+										placeholder="Entre com nÃºmero do endereÃ§o"
 										ng-disabled="IsDisabled" ng-model="endereco.numero">
 								</div>
 								<div class="form-group">
 									<label>Complemento</label> <input type="text"
 										class="form-control"
-										placeholder="Entre com complemento do endereço"
+										placeholder="Entre com complemento do endereÃ§o"
 										ng-disabled="IsDisabled" ng-model="endereco.complemento"
 										maxlength="150">
 								</div>

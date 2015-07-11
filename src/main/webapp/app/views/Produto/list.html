@@ -1,4 +1,4 @@
-<main></main>
+ï»¿<main class="row"> 
 <div class="col-lg-12">
 	<h1 class="page-header">{{Titulo1}}{{Titulo2}}</h1>
 </div>
@@ -6,26 +6,26 @@
 	<table ng-table class="table table-bordered">
 		<thead>
 			<tr>
-				<th>Código</th>
+				<th>CÃ³digo</th>
 				<th>Nome</th>
-				<th>Preço</th>
-				<th>Ações</th>
+				<th>PreÃ§o</th>
+				<th style="width: 40%;">AÃ§Ãµes</th>
 			</tr>
-		</thead>
+		</thead> 
 		<tbody>
 			<tr ng-repeat="produto in produtos">
 				<td>{{produto.id}}</td>
 				<td>{{produto.nomeProduto}}</td>
 				<td>{{produto.preco}}</td>
-				<td><button type="button" class="btn btn-primary"
+				<td><button type="button" class="btn btn-primary btn-sm"
 						ng-click="adicionarComponente(produto.id)">
 						<i class="glyphicon glyphicon-plus"></i> Adicionar Componentes
 					</button>
-					<button type="button" class="btn btn-default"
+					<button type="button" class="btn btn-default btn-sm"
 						ng-click="editar(produto.id)">
 						<i class="glyphicon glyphicon-pencil"></i> Editar
 					</button>
-					<button type="button" class="btn btn-danger"
+					<button type="button" class="btn btn-danger btn-sm"
 						ng-click="excluir(produto.id)">
 						<i class="glyphicon glyphicon-remove"></i> Excluir
 					</button></td>
@@ -33,3 +33,4 @@
 		</tbody>
 	</table>
 </div>
+</main>

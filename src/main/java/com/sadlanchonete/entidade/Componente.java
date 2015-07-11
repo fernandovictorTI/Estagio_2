@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 @Entity
 @SequenceGenerator(name = "seq", sequenceName = "seq_componente",
@@ -26,6 +27,9 @@ public class Componente {
 	
 	@Column
 	private int quantidade;
+	
+	@Transient
+	private int quantidadeNecessaria;
 
 	public int getId() {
 		return id;
@@ -65,6 +69,14 @@ public class Componente {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public int getQuantidadeNecessaria() {
+		return quantidadeNecessaria;
+	}
+
+	public void setQuantidadeNecessaria(int quantidadeNecessaria) {
+		this.quantidadeNecessaria = quantidadeNecessaria;
 	}
 
 }

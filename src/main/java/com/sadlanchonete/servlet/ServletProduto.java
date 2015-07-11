@@ -72,6 +72,7 @@ public class ServletProduto extends HttpServlet {
 						Componente componente = new Componente();
 						componente = produtoComponente.getComponente();
 						componente.setId(produtoComponente.getId());
+						componente.setQuantidadeNecessaria(produtoComponente.getQuantidadeNecessaria());
 						produtoView.setComponente(componente);
 					}
 					
@@ -131,9 +132,10 @@ public class ServletProduto extends HttpServlet {
 			
 			for (Componente componente : produto.getComponentes()) {
 				produtoComponente = new ProdutoComponente();
-				produtoComponente.setId(componente.getId());
+				produtoComponente.setId(0);
 				produtoComponente.setComponente(componente);
 				produtoComponente.setProduto(produto);
+				produtoComponente.setQuantidadeNecessaria(componente.getQuantidadeNecessaria());
 				lstProdutosComponente.add(produtoComponente);
 			}
 

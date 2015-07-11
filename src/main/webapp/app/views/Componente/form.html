@@ -1,6 +1,6 @@
-<div ng-controller="ComponenteController as Componente">
+<main class="row">
 
-	<main>
+<div ng-controller="ComponenteController as Componente">
 
 	<div class="col-lg-12">
 		<h1 class="page-header">{{Titulo2}}</h1>
@@ -11,39 +11,41 @@
 
 			<div class="panel-heading">{{Titulo}}{{Titulo2}}</div>
 			<div class="panel-body">
+				<form name="formComponente">
+					<div class="form-group">
+						<label>Nome do componente*</label> <input type="text"
+							class="form-control" placeholder="Entre com o nome do componente"
+							ng-disabled="IsDisabled" ng-model="Componente.nomeComponente"
+							required>
+					</div>
 
-				<div class="form-group">
-					<label>Nome do componente*</label> <input type="text"
-						class="form-control" placeholder="Entre com o nome do componente"
-						ng-disabled="IsDisabled" ng-model="Componente.nomeComponente">
-				</div>
+					<div class="form-group">
+						<label>Tipo *</label> <input type="text" class="form-control"
+							placeholder="Entre com o tipo do componente"
+							ng-disabled="IsDisabled" ng-model="Componente.tipoComponente"
+							required>
+					</div>
 
-				<div class="form-group">
-					<label>Tipo *</label> <input type="text" class="form-control"
-						placeholder="Entre com o tipo do documento"
-						ng-disabled="IsDisabled" ng-model="Componente.tipoComponente">
-				</div>
+					<div class="form-group">
+						<label>Unidade de medida *</label> <input type="text"
+							class="form-control" placeholder="Entre com a unidade de medida"
+							ng-disabled="IsDisabled" ng-model="Componente.undMedida" required>
+					</div>
 
-				<div class="form-group">
-					<label>Unidade de medida *</label> <input type="text"
-						class="form-control" placeholder="Entre com a unidade de medida"
-						ng-disabled="IsDisabled" ng-model="Componente.undMedida">
-				</div>
+					<div class="form-group">
+						<label>Quantidade em estoque *</label> <input type="text"
+							class="form-control" placeholder="Entre com a quantidade"
+							ng-model="Componente.quantidade" ui-number-mask required>
+					</div>
 
-				<div class="form-group">
-					<label>Quantidade em estoque *</label> <input type="text" class="form-control"
-						placeholder="Entre com a quantidade"
-						ng-model="Componente.quantidade">
-				</div>
-
-				<input type="button" class="btn btn-sm btn-success"
-					value="{{Titulo}}" ng-click="cadastrar()" /> <a href="#/Principal"
-					class="btn btn-sm btn-danger">Voltar</a>
-
+					<input type="button" class="btn btn-sm btn-success"
+						value="{{Titulo}}" ng-click="cadastrar()"
+						ng-disabled="formComponente.$invalid" /> <a href="#/Principal"
+						class="btn btn-sm btn-danger">Voltar</a>
+				</form>
 			</div>
 
 		</div>
 	</div>
-
-	</main>
 </div>
+</main>

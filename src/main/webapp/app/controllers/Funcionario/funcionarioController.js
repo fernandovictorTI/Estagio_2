@@ -111,10 +111,25 @@
 			}
 			
 		}
+		
+		function montarAlert(titulo ,contentMsg, typeMsg){
+			return {
+				title : titulo,
+				content : contentMsg,
+				placement: 'top',
+				type : typeMsg, 
+				container : "strong"
+			}; 
+		}
 
 		function adicionarTelefone(){
+			if($scope.telefone == undefined){
+				$scope.alert = $alert(montarAlert('Campos incorretos', 'Preencha os campos obrigatórios.', 'danger'));
+				return;
+			}
 			$scope.Funcionario.telefones.push($scope.telefone);
-			$scope.telefone = [];			
+			$scope.telefone = "";	
+			hideModalTelefone();
 		}
 
 		function removerTelefone(telefone){

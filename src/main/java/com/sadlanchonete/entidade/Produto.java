@@ -27,7 +27,7 @@ public class Produto {
 	@Column(nullable = false)
 	private float preco;
 	
-	@OneToMany(mappedBy = "produto", targetEntity = ProdutoComponente.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "produto", targetEntity = ProdutoComponente.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<ProdutoComponente> produtoComponentes;
 
 	@Transient

@@ -1,6 +1,8 @@
 package com.sadlanchonete.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,13 +14,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.sadlanchonete.daos.ComponenteDao;
 import com.sadlanchonete.daos.FuncionarioDao;
 import com.sadlanchonete.daos.PedidoDao;
 import com.sadlanchonete.daos.ProdutoDao;
+import com.sadlanchonete.entidade.Componente;
 import com.sadlanchonete.entidade.Funcionario;
 import com.sadlanchonete.entidade.FuncionarioView;
+import com.sadlanchonete.entidade.Item;
 import com.sadlanchonete.entidade.Pedido;
 import com.sadlanchonete.entidade.Produto;
+import com.sadlanchonete.entidade.ProdutoComponente;
 import com.sadlanchonete.entidade.ProdutoView;
 
 @WebServlet("/ServletPedido")
@@ -76,7 +83,6 @@ public class ServletPedido extends HttpServlet {
 			
 			Pedido pedido = new Pedido();
 			pedido.setNumeroPedido(retorno++);
-			pedido.setDataPedido(new Date());
 			
 			json = new Gson().toJson(pedido);
 			break;
@@ -88,7 +94,50 @@ public class ServletPedido extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		PedidoDao pedidoDao = new PedidoDao();
+		
+		try{
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					request.getInputStream()));
+			String json = "";
+			if (br != null) {
+				json = br.readLine();
+			}
+			
+			Pedido pedido = new Pedido();
+			
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd")
+					.create();
+			pedido = gson.fromJson(json, Pedido.class);			
+			pedido.setDataPedido(new Date());
+			
+			for(Item item : pedido.getItens()){
+				item.setPedido(pedido);
+			}
+			
+			pedidoDao.add(pedido);
+			
+			// Atualiza estoque
+			ComponenteDao componenteDao = new ComponenteDao();
+			ProdutoDao produtoDao = new ProdutoDao();
+			
+			for(Item item : pedido.getItens()){
+				
+				Produto produto = item.getProduto();
+				produto = produtoDao.getById(produto.getId());
+
+				for (ProdutoComponente produtoComponente : produto.getProdutoComponentes()) {
+					Componente componente = produtoComponente.getComponente();
+					componente.setQuantidade(componente.getQuantidade() - item.getQuantidade());
+					componenteDao.update(componente);
+				}				
+			}
+			
+		} catch (Exception e) {
+			response.setContentType("text/html;charset=UTF-8");
+			response.getWriter().write("ERRO");
+		}
 	}
 
 }
